@@ -21,13 +21,64 @@ const App = (props) => {
   const [pokemonId, setPokemonId] = useState('');
   let [pokemonIndex, setPokemonIndex] = useState(0);
   const [redirect, setRedirect] = useState(false);
-  
+  const [namesAdded, setNamesAdded] = useState([]);
   const handleAddPokemon = (props) => {
     
-    getPokemonId(posts, text)
+    getPokemonId(posts, text);
+    // getPokemonId(posts, text)
 
     // console.log(props.addPokemon(posts[pokemonIndex]));
     setText('');
+  }
+
+  const handleAddedPokemon = (pokemonArrayObj, searchedPokemonName) => {
+    const lowerCasePokemon = searchedPokemonName.toLowerCase()
+    pokemonArrayObj.forEach(function(pokemonObj) {
+      setPokemonIndex(pokemonIndex += 1);
+      if (pokemonObj.name == lowerCasePokemon) {
+        // console.log('pokemon found at position', pokemonIndex);
+        // props.addPokemon(posts[pokemonIndex - 1])
+        setNamesAdded(namesAdded.push(lowerCasePokemon));
+        props.addPokemon(pokemonIndex);
+        console.log(posts[pokemonIndex], 'found');
+        setPokemonIndex(0);
+        setNamesAdded(namesAdded.push(lowerCasePokemon));
+        // setRedirect(true);
+      }
+    })
+  }
+  const getPokemonId = (pokemonArrayObj, searchedPokemonName) => {
+    if (namesAdded.length == 0) {
+      handleAddedPokemon(pokemonArrayObj, searchedPokemonName)
+      // pokemonArrayObj.forEach(function(pokemonObj) {
+      //   setPokemonIndex(pokemonIndex += 1);
+      //   if (pokemonObj.name == lowerCasePokemon) {
+      //     setNamesAdded(namesAdded.push(lowerCasePokemon));
+      //     props.addPokemon(pokemonIndex);
+      //     console.log(posts[pokemonIndex], 'found');
+      //     setPokemonIndex(0);
+      //     setNamesAdded(namesAdded.push(lowerCasePokemon));
+      //   }
+      // })
+    } else if (namesAdded != 0) {
+      for (let i = 0; i < namesAdded.length; i++) {
+        if (namesAdded[i] == searchedPokemonName) {
+          console.log('Não adiciona o pokemon');
+        } else {
+          // pokemonArrayObj.forEach(function(pokemonObj) {
+          //   setPokemonIndex(pokemonIndex += 1);
+          //   if (pokemonObj.name == lowerCasePokemon) {
+          //     setNamesAdded(namesAdded.push(lowerCasePokemon));
+          //     props.addPokemon(pokemonIndex);
+          //     console.log(posts[pokemonIndex], 'found');
+          //     setPokemonIndex(0);
+          //     setNamesAdded(namesAdded.push(lowerCasePokemon));
+          //   }
+          // })
+          handleAddedPokemon(pokemonArrayObj, searchedPokemonName)
+        }
+      }
+    }
   }
 
   const getPokemonUrl = (id) => `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -89,22 +140,7 @@ const App = (props) => {
     )
   }
 
-  const getPokemonId = (pokemonArrayObj, searchedPokemonName) => {
-    
-    let lowerCasePokemon = searchedPokemonName.toLowerCase()
-    pokemonArrayObj.forEach(function(pokemonObj) {
-      setPokemonIndex(pokemonIndex += 1);
-      if (pokemonObj.name == lowerCasePokemon) {
-        // console.log('pokemon found at position', pokemonIndex);
-        // props.addPokemon(posts[pokemonIndex - 1])
-        props.addPokemon(pokemonIndex - 1);
-
-        console.log(posts[pokemonIndex - 1], 'found');
-        setPokemonIndex(0);
-        // setRedirect(true);
-      }
-    })
-  }
+  
   const getPokemonIdRedirect = (pokemonArrayObj, searchedPokemonName) => {
     console.log(pokemonArrayObj);
     let lowerCasePokemon = searchedPokemonName.toLowerCase()

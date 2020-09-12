@@ -59,7 +59,10 @@ h1 {
 	grid-gap: 20px;
 	padding-inline-start: 0;
 }
-
+.pokemon-name {
+  font-size: 40px;
+  font-family: inherit
+}
 .card {
 	list-style: none;
 	padding: 40px;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { getPokemonsState } from './redux/selectors';
 import './App.css';
 function Pokemon(props){
-    const [favorite, setFavorite] = useState([]);
     useEffect(() => {
         // console.log(props.favorite, 'props')
         // setFavorite(favorite.push(props.favorite))

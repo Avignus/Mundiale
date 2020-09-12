@@ -63,6 +63,8 @@ const PokemonsList = (props) => {
         setLoading(false); 
     }
 
+    
+
     const tryFetch = () => {
         props.pokemons.allIds.map(item => (
             setFavorite(favorite.push(item))
@@ -74,7 +76,6 @@ const PokemonsList = (props) => {
             console.log(pokemonPromises, 'promessas');
         })
         Promise.all(pokemonPromises).then((response) => setPokemons(response))
-        let booleans = []
         let arr = new Array(favorite.length);
         for (let i = 0; i < arr.length; i++) { 
             arr[i] = true;
@@ -82,13 +83,6 @@ const PokemonsList = (props) => {
         setArrayOfBooleans(arr);
     }
 
-    const fetchRemove = (index, pokemonArray, pokemonId) => {
-        props.removePokemon(props.pokemons.allIds[index]);
-        console.log(props.pokemons.allIds);
-        console.log(props.pokemons.allIds[index]);
-        pokemonArray.filter(item => item.id !== pokemonId);
-        console.log(pokemonArray);
-    }
     function getPokemonId(searchedPokemonIndex) {
         for (let i = 0; i <= favorite.length; i++) {
             console.log(favorite[i]);
@@ -111,6 +105,7 @@ const PokemonsList = (props) => {
       }
     
     function searchRevert(array, index) { 
+        fetchRemove(index, props.pokemons.allIds, props.pokemons.allIds[index])
         let arrFiltered = []
         for (let i = 0; i <= array.length; i++) {
             console.log(i);
@@ -123,6 +118,15 @@ const PokemonsList = (props) => {
             }
         }
     }
+
+    const fetchRemove = (index, pokemonArray, pokemonId) => {
+        props.removePokemon(props.pokemons.allIds[index]);
+        console.log(props.pokemons.allIds);
+        console.log(props.pokemons.allIds[index]);
+        pokemonArray.filter(item => item.id !== pokemonId);
+        console.log(pokemonArray);
+    }
+
     console.log(favorite, 'favorito')
     return (
     <div>

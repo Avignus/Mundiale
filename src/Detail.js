@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 function Detail({match}) { 
     const [pokemonData, setPokemonData] = useState({});
+    const [pokemonName, setPokemonName] = useState('');
     const [firstFormData, setFirstFormData] = useState({});
     const [secondFormData, setSecondFormData] = useState({});
     const [thirdFormData, setThirdFormData] = useState({});
@@ -44,41 +45,57 @@ function Detail({match}) {
             return null;
         }
         return (
-                <div>
-                    <ul>
+                <ul style={{paddingTop: 10}}>
                     {secondEvolutionIds.map(item => (
-                        <li style={{listStyle: "none"}}>
-                            <img style={{height: 50}} src={`https://pokeres.bastionbot.org/images/pokemon/${item}.png`}/>
+                        <li className="row d-flex align-items-center justify-content-center" style={{listStyle: "none", height: '100%'}}>
+                            <img style={{height: 50, backgroundColor: 'purple'}} src={`https://pokeres.bastionbot.org/images/pokemon/${item}.png`}/>
                         </li>
                     ))}
-                    </ul>
-                </div>
-
-            
-        )
+                </ul>
+            )
+    }
+    const getFormattedName = (name) => {
+        const formatted = name.split(" ").map(i => (i[0] ?? "").toUpperCase() + i.slice(1).toLowerCase()).join(" ")
+        return formatted
     }
     const renderNames = () => {
         if(listOfSecondEvolutionNames.length === 0) {
             return null;
         }
         return (
-            <ul style={{backgroundColor: 'green', height: '100%'}}>
+            <ul style={{paddingTop: 10, width: '100%'}}>
                 {listOfSecondEvolutionNames.map(item => (
-                    <li style={{backgroundColor: 'pink', height: 50, listStyle: 'none'}}>
-                        <p>{item}</p>
+                    <li className="row d-flex border-bottom justify-content-center" style={{fontFamily: 'inherit', paddingTop: 7, backgroundColor: 'pink', height: 50, listStyle: 'none', borderWidth: 0.1, borderBottomColor: 'black'}}>
+                        <p>{getFormattedName(item)}</p>
                     </li>
                 ))}
             </ul>
         )
     }
     const renderStatusLabels = () => {
+        console.log(statusLabelArray);
         if(statusLabelArray.length === 0) {
             return null;
         }
         return (
-            <ul>
+            <ul className="row d-flex justify-content-start" style={{width: '100%', textAlign: 'left', paddingTop: 10}}>
                 {statusLabelArray.map(item => (
-                    <li>
+                    <li style={{listStyle: 'none', backgroundColor: 'purple', height: 50}}>
+                        {item}
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+    const renderStatus = () => {
+        console.log(statusLabelArray);
+        if(statusArray.length === 0) {
+            return null;
+        }
+        return (
+            <ul className="row d-flex justify-content-start align-items-center" style={{width: '100%', textAlign: 'left', paddingTop: 10}}>
+                {statusArray.map(item => (
+                    <li style={{listStyle: 'none', backgroundColor: 'purple', height: 50}}>
                         <p>{item}</p>
                     </li>
                 ))}
@@ -189,18 +206,25 @@ function Detail({match}) {
 
     }
     const fetchItem = async() => {
+        let labelArray = [];
+        let statusArray = [];
         let pokemonPromise = []
         const fetchItem = await fetch(`https://pokeapi.co/api/v2/pokemon/${match.params.id}`);
         const item = await fetchItem.json();
         setPokemonData(item);
-        console.log(item);
-        item.stats.forEach(function(stat) {
-            setStatusLabelArray(statusLabelArray.push(stat.stat.name));
-            setStatusArray(statusArray.push(stat.base_stat));
-            console.log(statusLabelArray);
-            console.log(statusArray);
+        let formattedPokemonName = item.name.split(" ").map(name => name[0].toUpperCase() + name.slice(1).toLowerCase())
+        setPokemonName(formattedPokemonName)
+        item.stats.map(item => {
+            console.log(item, 'item retornado status');
+            labelArray.push(item.stat.name);
+            statusArray.push(item.base_stat)
+            // setStatusLabelArray(statusLabelArray.push(stat.stat.name));
+            // setStatusArray(statusArray.push(stat.base_stat));
+            // console.log(statusLabelArray, 'etiquetas status');
+            // console.log(statusArray);
         });
-
+        setStatusLabelArray(labelArray);
+        setStatusArray(statusArray);
         const speciesUrl = await item.species.url;
         const species = await fetch(speciesUrl);
         const speciesReturned = await species.json();
@@ -251,15 +275,31 @@ function Detail({match}) {
         <div className="container">
             <div className="col-lg-4 offset-4">
                 <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'yellow', borderRadius: 18, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 150}}>
-                    <p style={{fontSize: 40, fontFamily: 'Montserrat'}}>
-                        {pokemonData.name}
+                    <p className="pokemon-name">
+                        {pokemonName}
                     </p>
                 </div>
-                <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'gray', height: 200}}>
+                <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'gray', height: 330}}>
                     <div className="col-6">
-                        <img style={{height: 150}} src={`https://pokeres.bastionbot.org/images/pokemon/${pokemonData.id}.png`}/>
+                        <div className="row d-flex justify-content-center">
+                            <img style={{height: 150}} src={`https://pokeres.bastionbot.org/images/pokemon/${pokemonData.id}.png`}/>
+                        </div>
                     </div>
-                    <div className="col-6">status</div>
+                    <div className="col-6" style={{backgroundColor: 'purple', height: '100%'}}>
+                        <div className="row d-flex">
+                            <div className="col" style={{backgroundColor: 'orange'}}>
+                                <div className="row justify-content-start" style={{width: '100%'}}>
+                                    {renderStatusLabels()}
+                                </div>
+                            </div>
+                            <div className="col" style={{backgroundColor: 'blue'}}>
+                                <div className="row justify-content-start" style={{width: '100%'}}>
+                                    {renderStatus()}                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div className="row d-flex justify-content-center align-items-start">
                     Formas
@@ -268,7 +308,7 @@ function Detail({match}) {
                         {firstFormReturned ?
                             <div className="row d-flex justify-content-center" style={{backgroundColor: 'yellow', width: '100%'}}>
                                 <div className="col-12" style={{backgroundColor: 'blue', textAlign: 'center'}}>
-                                    Primeira
+                                    Primeira evolução
                                 </div>
                                 <img style={{height: 100}} src={`https://pokeres.bastionbot.org/images/pokemon/${firstFormData.id}.png`}/>
                             </div>
@@ -276,17 +316,21 @@ function Detail({match}) {
                         }
                         {listOfSecondEvolutionNames.length > 0 ? 
                         <div className="row d-flex justify-content-center" style={{width: '100%'}}>
-                            <div className="row d-flex align-items-center" style={{width: '100%', backgroundColor: 'green', height: 50, textAlign: 'center'}}>
+                            <div className="row d-flex align-items-center" style={{width: '100%', backgroundColor: 'transparent', height: 50, textAlign: 'center'}}>
                                 <div className="col-12">
                                     Possíveis segundas evoluções
                                 </div>
                             </div>
                             <div className="row d-flex" style={{backgroundColor: 'purple', height: '100%', width: '100%'}}>
-                                <div className="col-6">
-                                    {renderImages()}
+                                <div className="col-4">
+                                    <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'green', height: '100%'}}>
+                                        {renderImages()}
+                                    </div>
                                 </div>
-                                <div className="col-6">
-                                    {renderNames()}
+                                <div className="col-6" style={{backgroundColor: 'transparent'}}>
+                                    <div className="row d-flex justify-content-start">
+                                        {renderNames()}
+                                    </div>
                                 </div>
                             </div> 
                         </div>
@@ -309,12 +353,21 @@ function Detail({match}) {
 
                         {thirdFormReturned ?
                         <div className="row d-flex justify-content-center" style={{backgroundColor: 'blue', textAlign: 'center', width: '100%'}}>
-                                <div className="col-12">
-                                    <span>Terceira</span>
+                            <div className="col-12">
+                                <span>Terceira evolução</span>
+                            </div>
+                            <div className="row d-flex" style={{backgroundColor: 'purple', height: '100%', width: '100%'}}>
+                                <div className="col-6">
+                                    <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'green', height: '100%'}}>
+                                        <img style={{height: 100}} src={`https://pokeres.bastionbot.org/images/pokemon/${thirdFormData.id}.png`}/>
+                                    </div>
                                 </div>
-                                <div className="col-12">
-                                    <img style={{height: 100}} src={`https://pokeres.bastionbot.org/images/pokemon/${thirdFormData.id}.png`}/>
+                                <div className="col-6" style={{backgroundColor: 'green'}}>
+                                    <div className="row d-flex justify-content-center align-items-center" style={{backgroundColor: 'orange', height: '100%'}}>
+                                        <span>{getFormattedName(thirdFormData.name)}</span>
+                                    </div>
                                 </div>
+                            </div>
                         </div>
                             : ''
                         }
