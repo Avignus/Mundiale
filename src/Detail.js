@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Progress from 'react-bootstrap/ProgressBar'
 import './App.css';
 function Detail({match}) { 
     const [pokemonData, setPokemonData] = useState({});
@@ -80,9 +81,12 @@ function Detail({match}) {
         return (
             <ul className="row d-flex justify-content-start" style={{width: '100%', textAlign: 'left', paddingTop: 10}}>
                 {statusLabelArray.map(item => (
-                    <li style={{listStyle: 'none', backgroundColor: 'purple', height: 50}}>
-                        {item}
-                    </li>
+                    <>
+                        <li style={{listStyle: 'none', backgroundColor: 'purple', height: 50}}>
+                            {item}
+                        </li>
+
+                    </>
                 ))}
             </ul>
         )
@@ -93,14 +97,43 @@ function Detail({match}) {
             return null;
         }
         return (
+            
             <ul className="row d-flex justify-content-start align-items-center" style={{width: '100%', textAlign: 'left', paddingTop: 10}}>
                 {statusArray.map(item => (
-                    <li style={{listStyle: 'none', backgroundColor: 'purple', height: 50}}>
-                        <p>{item}</p>
+                    
+                    <li style={{listStyle: 'none', backgroundColor: 'transparent', height: 50}}>
+                        {/* <p>{item}</p> */}
+                        <Progress style={{width: 50, height: 10}} variant={decideStyle(statusLabelArray[statusArray.indexOf(item)])} now={item} />
+
                     </li>
                 ))}
             </ul>
         )
+    }
+    function decideStyle(style) {
+        let color = ''
+        
+        switch(style) {
+            case 'hp':
+                color = 'success'; 
+                return color               
+            case 'attack':
+                color = 'danger'
+                return color               
+            case 'defense':
+                color = 'danger'
+                return color  
+            case 'special-attack':
+                color = 'info';
+                return color;    
+            case 'special-defense': 
+                color = 'danger'
+                return color
+            case 'speed': 
+                color = 'success'
+                return color                
+        }
+        console.log(style, 'estilo atual');
     }
     const verifySecondForm = async(chain) => {
         const listOfEvolutionPromises = [];
@@ -292,7 +325,7 @@ function Detail({match}) {
                                     {renderStatusLabels()}
                                 </div>
                             </div>
-                            <div className="col" style={{backgroundColor: 'blue'}}>
+                            <div className="col" style={{backgroundColor: 'transparent'}}>
                                 <div className="row justify-content-start" style={{width: '100%'}}>
                                     {renderStatus()}                                    
                                 </div>
