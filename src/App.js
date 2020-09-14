@@ -132,7 +132,7 @@ const App = (props) => {
           <ul style={{marginTop: -20}}>
             {suggestions.map(item => (
     
-                <li onClick={() => suggestionSelected(item)}>{item}</li>
+                <li style={{fontFamily: 'Montserrat'}} onClick={() => suggestionSelected(item)}>{item}</li>
     
             ))}
           </ul>
