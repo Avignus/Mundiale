@@ -84,7 +84,7 @@ function Detail({match}) {
                 {statusLabelArray.map(item => (
                     <div>
                         <li className="row d-flex justify-content-center align-items-center border-bottom border-top border-left" style={{listStyle: 'none', backgroundColor: 'transparent', height: 50, width: 92}}>
-                            <span style={{fontSize: 9, fontFamily: 'Consolas'}}>{item.toUpperCase()}</span>
+                            <span style={{fontSize: 11, fontFamily: 'Consolas'}}>{item.toUpperCase()}</span>
                         </li>
 
                     </div>

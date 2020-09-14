@@ -50,7 +50,7 @@ h1 {
 }
 
 .btn {
-  font-family: 'Rubik';
+  font-family: 'Courier New', Courier, monospace;
   color: gray;
 }
 .pokedex {
@@ -61,7 +61,7 @@ h1 {
 }
 .pokemon-name {
   font-size: 40px;
-  font-family: inherit
+  font-family: 'Courier New', Courier, monospace
 }
 .card {
 	list-style: none;
