@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Posts = ({posts, loading}) => {
     if(loading) {

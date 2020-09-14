@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Pagination = ({ postsPerPage, totalPosts, paginate, sections }) => {
     const pageNumbers = [];
-    const groupsOfPages = [];
     for(let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }

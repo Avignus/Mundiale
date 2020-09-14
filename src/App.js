@@ -25,9 +25,6 @@ const App = (props) => {
   const handleAddPokemon = (props) => {
     
     getPokemonId(posts, text);
-    // getPokemonId(posts, text)
-
-    // console.log(props.addPokemon(posts[pokemonIndex]));
     setText('');
   }
 
@@ -36,45 +33,21 @@ const App = (props) => {
     pokemonArrayObj.forEach(function(pokemonObj) {
       setPokemonIndex(pokemonIndex += 1);
       if (pokemonObj.name == lowerCasePokemon) {
-        // console.log('pokemon found at position', pokemonIndex);
-        // props.addPokemon(posts[pokemonIndex - 1])
         setNamesAdded(namesAdded.push(lowerCasePokemon));
         props.addPokemon(pokemonIndex);
-        console.log(posts[pokemonIndex], 'found');
         setPokemonIndex(0);
         setNamesAdded(namesAdded.push(lowerCasePokemon));
-        // setRedirect(true);
       }
     })
   }
   const getPokemonId = (pokemonArrayObj, searchedPokemonName) => {
     if (namesAdded.length == 0) {
       handleAddedPokemon(pokemonArrayObj, searchedPokemonName)
-      // pokemonArrayObj.forEach(function(pokemonObj) {
-      //   setPokemonIndex(pokemonIndex += 1);
-      //   if (pokemonObj.name == lowerCasePokemon) {
-      //     setNamesAdded(namesAdded.push(lowerCasePokemon));
-      //     props.addPokemon(pokemonIndex);
-      //     console.log(posts[pokemonIndex], 'found');
-      //     setPokemonIndex(0);
-      //     setNamesAdded(namesAdded.push(lowerCasePokemon));
-      //   }
-      // })
     } else if (namesAdded != 0) {
       for (let i = 0; i < namesAdded.length; i++) {
         if (namesAdded[i] == searchedPokemonName) {
           console.log('Não adiciona o pokemon');
         } else {
-          // pokemonArrayObj.forEach(function(pokemonObj) {
-          //   setPokemonIndex(pokemonIndex += 1);
-          //   if (pokemonObj.name == lowerCasePokemon) {
-          //     setNamesAdded(namesAdded.push(lowerCasePokemon));
-          //     props.addPokemon(pokemonIndex);
-          //     console.log(posts[pokemonIndex], 'found');
-          //     setPokemonIndex(0);
-          //     setNamesAdded(namesAdded.push(lowerCasePokemon));
-          //   }
-          // })
           handleAddedPokemon(pokemonArrayObj, searchedPokemonName)
         }
       }
@@ -97,11 +70,6 @@ const App = (props) => {
         listNames.push(pokemon.name[0].toUpperCase() + pokemon.name.slice(1).toLowerCase());
       })))
       .then(() => setPokemonNames(listNames))
-    
-    // const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    // .then(res => setPosts(posts.push(res.data)))
-    // .then(() => console.log(posts))
-    
     setLoading(false); 
   }
   const onTextChanged = (e) => { 
@@ -119,7 +87,6 @@ const App = (props) => {
   
   const suggestionSelected = (value) => {
     setSuggestions([]);
-    console.log(value.toLowerCase());
     setText(value)
   }
 
@@ -142,14 +109,10 @@ const App = (props) => {
 
   
   const getPokemonIdRedirect = (pokemonArrayObj, searchedPokemonName) => {
-    console.log(pokemonArrayObj);
     let lowerCasePokemon = searchedPokemonName.toLowerCase()
     pokemonArrayObj.forEach(function(pokemonObj) {
       if (pokemonObj.name == lowerCasePokemon) {
         setPokemonIndex(pokemonObj.id);        
-        console.log('pokemon found at position', pokemonIndex);
-        // props.addPokemon(posts[pokemonIndex - 1])
-        console.log(posts[pokemonIndex - 1], 'found');
         setRedirect(true);
 
       }
@@ -183,19 +146,6 @@ const App = (props) => {
     height: 100
   }
 
-  const favoriteLink = {
-    color: 'black', 
-    borderRadius: 7, 
-    paddingLeft: 10, 
-    marginBottom: 20,
-    borderWidth: 0.5, 
-    borderColor: 'black',
-    alignItems: 'center',
-    height: 30,
-    backgroundColor: 'blue',
-    textAlign: 'center', 
-    width: 200
-  }
   const buttonStyle = {
     backgroundColor: 'white' , 
     color: 'black', 
@@ -250,10 +200,6 @@ const App = (props) => {
 
 const mapStateToProps = state => {
   const pokemons = getPokemonsState(state);
-  console.log(pokemons, 'redux retornado');
-  // state.allIds.forEach(function(id) {
-      
-  // });
   
   return { pokemons };   
   

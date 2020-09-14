@@ -6,24 +6,19 @@ function Detail({match}) {
     const [pokemonData, setPokemonData] = useState({});
     const [pokemonName, setPokemonName] = useState('');
     const [firstFormData, setFirstFormData] = useState({});
-    const [secondFormData, setSecondFormData] = useState({});
+    const [secondFormData] = useState({});
     const [thirdFormData, setThirdFormData] = useState({});
     const [firstFormReturned, setFirstFormReturned] = useState(false);
-    const [secondFormReturned, setSecondFormReturned] = useState(false);
     const [thirdFormReturned, setThirdFormReturned] = useState(false);
     const [statusLabelArray, setStatusLabelArray] = useState([]);
     const [statusArray, setStatusArray] = useState([]);
-    const [listOfEvolutions, setListOfEvolutions] = useState({});
     const [listOfSecondEvolutionNames, setSecondEvolutionNames] = useState([]);
     const [secondEvolutionIds, setSecondEvolutionIds] = useState([]);
     const [types, setTypes] = useState([]);
     useEffect(() => {
         fetchItem();
-        // setPokemonData(fetchItem());
-        // console.log(pokemonData);
     }, [])
 
-    const getPokemonUrl = (id) => `https://pokeapi.co/api/v2/pokemon/${id}`;
     const getPokemonNames = (pokemon) => {
         let list = [];
         pokemon.map(pokemon => (
@@ -31,7 +26,6 @@ function Detail({match}) {
             
             ))
         setSecondEvolutionNames(list);
-        console.log(listOfSecondEvolutionNames);
     }
     
     const getSecondEvolutionIds = (pokemon) => {
@@ -103,7 +97,6 @@ function Detail({match}) {
                 {statusArray.map(item => (
                     
                     <li className="row d-flex align-items-center justify-content-center border" style={{listStyle: 'none', backgroundColor: 'transparent', height: 50}}>
-                        {/* <p>{item}</p> */}
                         <Progress style={{width: 50, height: 10}} variant={decideStyle(statusLabelArray[statusArray.indexOf(item)])} now={item} />
                         <span>{item}</span>
                     </li>
@@ -148,19 +141,9 @@ function Detail({match}) {
                 .then((response) => response.forEach(function(pokemon) {
                     listOfEvolutionsReturned.push(pokemon);
                 }))
-                .then(() => setListOfEvolutions(listOfEvolutionsReturned))
                 .then(() => getPokemonNames(listOfEvolutionsReturned))
                 .then(() => getSecondEvolutionIds(listOfEvolutionsReturned)) 
         }
-        // Promises.all(listOfEvolutionsUrl)
-        //     .then(response => console)
-        // if (chain.chain.evolves_to[0].species.name) {
-        //     const getSecondFormData = await fetch(chain.chain.evolves_to[0].species.url);
-        //     const secondFormData = await getSecondFormData.json();
-        //     setSecondFormData(secondFormData);
-        //     setSecondFormReturned(true);
-        //     console.log(secondFormData);
-        // }
     }
 
     const verifyThirdForm = async(chain) => {
@@ -177,9 +160,6 @@ function Detail({match}) {
 
     
     const verifySpecie = async(chain) => {
-        // console.log(chain.chain.species.name, 'Primeira forma');
-        // console.log(chain.chain.evolves_to[0].species.name, 'Segunda forma');
-        // console.log(chain.chain.evolves_to[0].evolves_to[0].species.name, 'Terceira forma');
         if (chain.chain.species.name) {
             const getFirstFormData = await fetch(chain.chain.species.url);
             const firstFormData = await getFirstFormData.json();
@@ -188,56 +168,6 @@ function Detail({match}) {
         } 
         verifySecondForm(chain);
         verifyThirdForm(chain);
-        // console.log(chain.chain.species.name, 'Verificando');
-        // if (chain.chain.species.name) {
-        //     console.log('Primeira evolução', chain.chain.species.name);
-        //     console.log('Url da primeira evolução', chain.chain.species.url);
-        //     const evolutionBeforeUrl = chain.chain.species.url;
-        //     const evolutionBeforeData = await fetch(evolutionBeforeUrl);
-        //     const itemBefore = await evolutionBeforeData.json();
-        //     setEvolutionBefore(itemBefore);
-        //     console.log(itemBefore, 'Evolução anterior no estado');
-        // } else { 
-        //     console.log('É bebê');
-        // }
-        // if (chain.chain.evolves_to[0].evolves_to[0]) {
-        //     const evolutionAfterUrl = chain.chain.evolves_to[0].evolves_to[0].species.url;
-        //     console.log(evolutionAfterUrl, 'url');
-        //     const evolutionAfterData = await fetch(evolutionAfterUrl);
-        //     const itemAfter = await evolutionAfterData.json();
-        //     setEvolutionAfter(itemAfter);
-        //     console.log(itemAfter, 'última evolução')
-        // } 
-    }
-    const verifyEvolutionAfter = async(chain) => {
-        console.log(chain.chain.evolves_to[0], 'Verificando motivo de não ter aparecido')
-        if (chain.chain.evolves_to[0].evolves_to[0]) {
-            console.log('Próxima evolução', chain.chain.evolves_to[0].evolves_to[0].species.name);
-            console.log('Url da primeira evolução', chain.chain.evolves_to[0].evolves_to[0].species.url);
-            const evolutionAfterUrl = chain.chain.evolves_to[0].evolves_to[0].species.url;
-            const evolutionAfterData = await fetch(evolutionAfterUrl);
-            const itemAfter = await evolutionAfterData.json();
-            // setEvolutionAfter(itemAfter);
-            console.log(itemAfter, 'Evolução posterior no estado');
-        }
-
-        // if (chain.chain.evolves_to[0].species.name) {
-        //     console.log(chain.chain.evolves_to[0].species.name, 'penúltima evolução');
-        //     const evolutionBeforeUrl = chain.chain.evolves_to[0].species.url
-        //     const evolutionBeforeData = await fetch(evolutionBeforeUrl);
-        //     const itemBefore = await evolutionBeforeData.json();
-        //     setEvolutionBefore(itemBefore);
-        //     console.log(itemBefore, 'penúltima evolução');
-        // } else {
-        //     console.log('Não tem anterior, portanto é bebê');
-        // }
-        // if (chain.chain.evolves_from[0].length > 0) {
-        //     const evolutionBeforeUrl = chain.chain.evolves_from[0].species.url;
-        //     const evolutionBeforeData = await fetch(evolutionBeforeUrl);
-        //     const itemBefore = await evolutionBeforeData.json();
-        //     setEvolutionBefore(itemBefore);
-        // }
-
     }
     const fetchItem = async() => {
         let labelArray = [];
@@ -250,24 +180,17 @@ function Detail({match}) {
         setPokemonName(formattedPokemonName)
         item.types.map(typeInfo => typesArray.push(typeInfo.type.name));
         item.stats.map(item => {
-            console.log(item, 'item retornado status');
             labelArray.push(item.stat.name);
-            statusArray.push(item.base_stat)
-            // setStatusLabelArray(statusLabelArray.push(stat.stat.name));
-            // setStatusArray(statusArray.push(stat.base_stat));
-            // console.log(statusLabelArray, 'etiquetas status');
-            // console.log(statusArray);
+            statusArray.push(item.base_stat);
         });
         setStatusLabelArray(labelArray);
         setStatusArray(statusArray);
         setTypes(typesArray);
-        console.log(types, 'tipos');
         const speciesUrl = await item.species.url;
         const species = await fetch(speciesUrl);
         const speciesReturned = await species.json();
         
         if (speciesReturned.evolution_chain) {
-            console.log('Tem evoluções')
             const evolutionChainUrl = await speciesReturned.evolution_chain.url;
             const evolutionChain = await fetch(evolutionChainUrl);
             const evolutionChainReturned = await evolutionChain.json();
@@ -279,35 +202,8 @@ function Detail({match}) {
         } else {
             console.log('Não tem evoluções')
         }
-
-
-        // verifyEvolutionBefore(evolutionChainReturned);
-        // verifyEvolutionBefore(evolutionChainReturned);
-        // console.log(evolutionChainUrl);
-        
-        // const evolutionAfterUrl = await evolutionChainReturned.chain.evolves_to[0].species.url;
-        // const evolutionAfter = await fetch(evolutionAfterUrl);
-        // const evolutionAfterReturned = await evolutionAfter.json();
-        // const evolutionFromUrl = await evolutionChainReturned.chain.evolves_from[0].species.url;
-        // console.log(evolutionFromUrl);
-        // setEvolutionAfter(evolutionAfterReturned);
-
-        // console.log(evolutionReturned, 'evolui para');
-        // console.log(speciesReturned);
-        // setEvolutionBefore(evolutionReturned);
-        // console.log(evolution);
-        // setPokemonData(fetchSpecie);
-        // setPokemonData(item);
-
-        // setDetails(pokemonPromise);
-        // console.log(details);
-        // const item = await fetchItem.json();
-        // const species = await item.species.url;
-        // const getPokemonDetail = await fetch(species)
     }  
-    // console.log(pokemonData);
-    console.log(listOfEvolutions, 'lista')
-    console.log(secondEvolutionIds, 'lista IDS');
+
     return(
         <div className="container">
             <div className="col-lg-4 col-md-6 col-sm-8 col-xs-8 offset-xs-0 offset-sm-0 offset-lg-4 card" style={{height: secondEvolutionIds.length > 0 ? 1050 : 850, borderRadius: 40}}>
