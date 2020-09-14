@@ -32,7 +32,7 @@ body {
 	background: #EFEFBB;
 	color: white;
 	margin: 0;
-  font-family: rubik;
+  font-family: Montserrat;
   background-image: url('./assets/backgroundgradient.svg');
 }
 
@@ -61,7 +61,7 @@ h1 {
 }
 .pokemon-name {
   font-size: 40px;
-  font-family: 'Courier New', Courier, monospace
+  font-family: 'Montserrat'
 }
 .card {
 	list-style: none;

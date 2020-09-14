@@ -147,13 +147,13 @@ const PokemonsList = (props) => {
                             return (
                             <li key={`pokemon-${pokemon.id}`} className={`card ${types[0]} col-lg-4 align-items-center justify-content-start`}>
                                 <div className="row d-flex justify-content-end" style={{backgroundColor: 'transparent', width: '100%'}}>
-                                    <button onClick={() => searchRevert(arrayOfBooleans, index)}>
+                                    <button style={{fontFamily: 'Montserrat'}} onClick={() => searchRevert(arrayOfBooleans, index)}>
                                         Remover
                                     </button>
                                 </div>
                                 <img className={`card-image ${types[0]}`} alt={pokemon.name} src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}/>
                                 <p>{getFormattedName(pokemon.name)}</p>
-                                <span>
+                                <span style={{fontFamily: 'Montserrat'}}>
                                     Tipos
                                 </span>
                                 <div className="row d-flex" style={{backgroundColor: 'transparent', width: '50%'}}>

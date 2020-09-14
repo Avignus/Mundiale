@@ -13,7 +13,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, sections }) => {
            <ul className="pagination">
                 {pageNumbers.map(number => (
                     <li className="item" style={{padding: 2}} key={number}>
-                        <button style={{borderColor: 'transparent', borderRadius: 7, backgroundcolor: 'yellow'}} onClick={() => paginate(number)}>
+                        <button style={{borderColor: 'transparent', borderRadius: 7, backgroundcolor: 'yellow', fontFamily: 'Montserrat'}} onClick={() => paginate(number)}>
                             {number}
                         </button>
                     </li>

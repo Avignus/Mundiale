@@ -10,7 +10,7 @@ const Posts = ({posts, loading}) => {
         <ul style={{display: "flex", alignItems: 'center', flexDirection: 'column'}}>
             {posts.map(post => (
                 <p style={{height: 22}} key={post.id}>
-                    <Link style={{color: 'whitesmoke', fontSize: 25, fontFamily: 'inherit'}} to={`/pokemon/${post.id}`}>
+                    <Link style={{color: 'whitesmoke', fontSize: 25, fontFamily: 'Montserrat'}} to={`/pokemon/${post.id}`}>
                         {post.name[0].toUpperCase() + post.name.slice(1).toLowerCase()}
                     </Link>
                 </p>

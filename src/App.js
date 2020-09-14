@@ -205,6 +205,7 @@ const App = (props) => {
     marginTop: 20,
     textAlign: 'center', 
     width: 200,
+    fontFamily: 'Montserrat'
   }
 
   return (
@@ -214,17 +215,17 @@ const App = (props) => {
             <input 
               value={text}
               placeholder="Nome do pokémon"
-              style={{marginBottom: 20, background: 'white', color: 'black', borderRadius: 7, paddingLeft: 10, textAlign: 'center', width: 200, marginTop: 20}}
+              style={{fontFamily: 'Montserrat', marginBottom: 20, background: 'white', color: 'black', borderRadius: 7, paddingLeft: 10, textAlign: 'center', width: 200, marginTop: 20}}
               onChange={onTextChanged} 
               type="text"
             />
             <div style={{backgroundColor: 'green', paddingRight: 180}}>
               {renderSuggestions()}
             </div>
-            <button className="btn-detail" style={buttonStyle} onClick={() => getPokemonIdRedirect(posts, text)}>
+            <button style={{fontFamily: 'Montserrat'}} className="btn-detail" style={buttonStyle} onClick={() => getPokemonIdRedirect(posts, text)}>
               Detalhar
             </button>
-            <button className="btn-favorite" style={buttonStyle} onClick={() => handleAddPokemon(props)}>
+            <button style={{fontFamily: 'Montserrat'}} className="btn-favorite" style={buttonStyle} onClick={() => handleAddPokemon(props)}>
               Adicionar aos favoritos
             </button>
             <Link to={'/favorites'}>
