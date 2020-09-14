@@ -87,7 +87,7 @@ const App = (props) => {
     setLoading(true);
     let listNames = [];
     const pokemonPromises = [];
-    for (let i = 1; i <= 150; i++) {
+    for (let i = 1; i <= 890; i++) {
       pokemonPromises.push(fetch(getPokemonUrl(i)).then(response => response.json()));
       
     }

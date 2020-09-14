@@ -127,48 +127,52 @@ const PokemonsList = (props) => {
         console.log(pokemonArray);
     }
 
+    const getFormattedName = (name) => {
+        const formatted = name.split(" ").map(i => (i[0] ?? "").toUpperCase() + i.slice(1).toLowerCase()).join(" ")
+        return formatted
+    }
+
     console.log(favorite, 'favorito')
     return (
     <div>
         
         
             {/* <Pokemon key={`pokemon-${pokemon.id}`} favorite={pokemon} /> */}
-        <ul>
+        <ul className="row d-flex">
             {pokemons && pokemons.length 
                 ? pokemons.map((pokemon, index) => {
                     const types = pokemon.types.map(typeInfo => typeInfo.type.name);
-                    console.log(types);
+                    console.log(types, 'tipos');
                         if(arrayOfBooleans[index]) {
                             return (
-                            <li key={`pokemon-${pokemon.id}`} className={`card ${types[0]} col-lg-4 align-items-center`}>
+                            <li key={`pokemon-${pokemon.id}`} className={`card ${types[0]} col-lg-4 align-items-center justify-content-start`}>
+                                <div className="row d-flex justify-content-end" style={{backgroundColor: 'transparent', width: '100%'}}>
+                                    <button onClick={() => searchRevert(arrayOfBooleans, index)}>
+                                        Remover
+                                    </button>
+                                </div>
                                 <img className={`card-image ${types[0]}`} alt={pokemon.name} src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}/>
-                                <p>{pokemon.name}</p>
-                                <button onClick={() => fetchRemove(index, pokemons, pokemon.id)}>Fetch remove</button>
-                                <button onClick={() => console.log(props.pokemons)}>
-                                    Props
-                                </button>
-                                <button onClick={() => searchRevert(arrayOfBooleans, index)}>Altera estado 1</button>
+                                <p>{getFormattedName(pokemon.name)}</p>
+                                <span>
+                                    Tipos
+                                </span>
+                                <div className="row d-flex" style={{backgroundColor: 'transparent', width: '50%'}}>
+                                    <span className={types[0] && types[1] ? `${types[0]} col-6` : `${types[0]} col-12`}>
+                                        {types[0] ? types[0].toUpperCase() : null}
+                                    </span>
+                                    <span className={`${types[1]} col-6`}>
+                                        {types[1] ? types[1].toUpperCase() : null}
+                                    </span>
+                                </div>
+                                
+                                
                             </li>
                             )
 
                         }
                 })
-            : "No pokemons added to favorite"}
-            <Pokemon nome="Bola" shouldShow={arrayOfBooleans[0]}/>
-            <Pokemon nome="Azul" shouldShow={shouldShow[1]}/>
-            <button onClick={() => searchRevert(arrayOfBooleans, 0)}>Altera estado 1</button>
-            <button onClick={() => searchRevert(shouldShow, 1)}>Altera estado 2</button>
-            <button onClick={() => console.log(shouldShow, 'estado')}>
-                Verifica 
-            </button>
+            : "Nenhum pokemon foi adicionado aos favoritos"}
         </ul>
-        <button onClick={() => console.log(arrayOfBooleans)}>
-            Checa booleanos
-        </button>
-        <button onClick={() => pokemons.filter(pokemon => pokemon.id !== 69)}>
-            Props
-        </button>
-        <button onClick={() => window.location.reload()}>reload</button>
 
     </div>
 
